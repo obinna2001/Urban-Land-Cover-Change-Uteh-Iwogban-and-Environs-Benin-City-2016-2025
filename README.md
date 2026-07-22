@@ -1,4 +1,4 @@
-# Heat and Reach: Lagos Island
+# Heat and Reach: Mapping Heat Exposure and Green-Space Accessibility in Lagos Island
 
 Heat and Reach is a Python geovisualisation project that investigates where
 high daytime land-surface temperatures, concentrated population, and limited
