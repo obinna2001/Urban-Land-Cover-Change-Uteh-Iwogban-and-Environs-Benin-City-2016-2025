@@ -1,0 +1,3 @@
+# Files and folders ignored by git
+.venv
+IMPLEMENTATION_GUIDE.md
