@@ -1,3 +1,6 @@
 # Files and folders ignored by git
 .venv
-IMPLEMENTATION_GUIDE.md
+/docs/IMPLEMENTATION_GUIDE.md
+/docs
+.DS_Store
+AGENTS.md
