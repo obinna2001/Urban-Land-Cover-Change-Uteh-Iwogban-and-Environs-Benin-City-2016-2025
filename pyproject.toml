@@ -4,4 +4,14 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "folium>=0.20.0",
+    "geopandas>=1.1.4",
+    "ipykernel>=7.3.0",
+    "mapclassify>=2.10.0",
+    "matplotlib>=3.11.1",
+    "nbformat>=5.10.4",
+    "osmnx>=2.1.1",
+    "rasterio>=1.5.0",
+    "shapely>=2.1.2",
+]
