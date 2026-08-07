@@ -1,0 +1,76 @@
+from pathlib import Path
+from dataclasses import dataclass, field
+from omegaconf import OmegaConf
+
+from src import ROOT
+
+@dataclass(slots=True, kw_only=True)
+class Rawdataset:
+    """Configuration class for raw/unprocessed dataset"""
+    aoi_geojson: str = field(
+        metadata={
+            "description": "File path to .geojson file containing the geometry of the selected area of interest"
+        }
+    )
+    aoi_lulc: str = field(
+        metadata={
+            "descriptiopn": "File path to the folder containing Google Earth Engine Dynamic World .geotif file of the area of interest"
+        }
+    )
+    base_data: str = field(
+        metadata={
+            "descriptiopn": "File path to shapefile of the 8,809 wards in Nigeria from Grid3"
+        }
+    )
+
+
+@dataclass(slots=True, kw_only=True)
+class Processeddataset:
+    """Configuration class for processed dataset"""
+    aoi_shapefile: str = field(
+         metadata={
+            "descriptiopn": "File path to shapefile of the area of interest"
+        }
+    )
+
+
+@dataclass(slots=True, kw_only=True)
+class Dataset:
+    "Configuration class for all datasets"
+    raw_dataset: Rawdataset = field(
+        metadata={
+            "descriptiopn": "File path to all raw datasets in this repository"
+        }
+    )
+    processed_dataset: Processeddataset = field(
+        metadata={
+            "descriptiopn": "File path to all preprocessed datasets in this repository"
+        }
+    )
+
+@dataclass(slots=True, kw_only=True)
+class AppConfig:
+    """Configuration for the Application"""
+    name: str = field(metadata={"description": "The name of the App."})
+    description: str = field(metadata={"description": "The description of the App."})
+
+
+@dataclass(slots=True, kw_only=True)
+class Config:
+    """Top level Configuration class of the application"""
+    app_config: AppConfig = field(metadata={"description": "The app configuration"})
+    dataset: Dataset = field(metadata={"description": "The configuration for the application dataset"})
+
+
+# Create a schema to help OmegaConf automatically perform validation during loading
+schema = OmegaConf.structured(Config)
+
+# Instantiate config.yaml path
+config_path: Path = ROOT / "src/config/config.yaml"
+
+# Read and validate config.yaml dataset
+config = OmegaConf.merge(schema, OmegaConf.load(config_path).config)
+
+# Convert config datatype to compatible python counterpart. This ensures seamless integration with other part of 
+# the repo allowing for value integration with other python libraries
+resolved_config: Config = OmegaConf.to_object(config) # type: ignore

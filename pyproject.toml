@@ -11,6 +11,7 @@ dependencies = [
     "mapclassify>=2.10.0",
     "matplotlib>=3.11.1",
     "nbformat>=5.10.4",
+    "omegaconf>=2.3.1",
     "osmnx>=2.1.1",
     "rasterio>=1.5.0",
     "shapely>=2.1.2",
