@@ -4,3 +4,12 @@
 /docs
 .DS_Store
 AGENTS.md
+
+# Ignore all __pycache__ directories
+__pycache__/
+
+# Optionally, ignore compiled bytecode files just in case
+*.pyc
+*.pyo
+*.pyd
+
