@@ -5,11 +5,11 @@ config:
 
   dataset:
     raw_dataset: 
-      aoi_geojson: "data/raw/custom_aoi_geojson/custom_aoi.geojson"
-      aoi_lulc: "data/raw/custom_aoi_LULC"
-      base_data: "data/raw/nigeria_wards_data/grid3_nga_boundary_vaccwards.shp"
+      aoi_geojson: "${repo_root:}/data/raw/custom_aoi_geojson/custom_aoi.geojson"
+      aoi_lulc: "${repo_root:}/data/raw/custom_aoi_LULC"
+      base_data: "${repo_root:}/data/raw/nigeria_wards_data/grid3_nga_boundary_vaccwards.shp"
 
     processed_dataset:
-      aoi_shapefile: "data/processed/custom_aoi_shapefile/area_of_interest.shp"
+      aoi_shapefile: "${repo_root:}/data/processed/custom_aoi_shapefile/area_of_interest.shp"
 
 
