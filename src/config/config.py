@@ -68,6 +68,13 @@ schema = OmegaConf.structured(Config)
 # Instantiate config.yaml path
 config_path: Path = ROOT / "src/config/config.yaml"
 
+# Populate repo_root in config file
+OmegaConf.register_new_resolver(
+    "repo_root",
+    lambda: str(ROOT),
+    replace=True,
+)
+
 # Read and validate config.yaml dataset
 config = OmegaConf.merge(schema, OmegaConf.load(config_path).config)
 
