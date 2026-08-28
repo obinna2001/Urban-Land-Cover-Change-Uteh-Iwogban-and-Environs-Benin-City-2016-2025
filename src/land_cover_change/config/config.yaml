@@ -1,6 +1,6 @@
 config:
   app_config:
-    name: ""
+    name: "Urban Land Cover Change: Uteh/Iwogban and Environs, Benin City (2016–2025)"
     description: ""
 
   dynamic_world_classes:
