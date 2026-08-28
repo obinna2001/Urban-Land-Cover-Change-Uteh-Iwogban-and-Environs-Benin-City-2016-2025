@@ -1,7 +1,18 @@
 config:
   app_config:
-    name: ""
+    name: "Urban Land Cover Change: Uteh/Iwogban and Environs, Benin City (2016–2025)"
     description: ""
+
+  dynamic_world_classes:
+    0: "water"
+    1: "trees"
+    2: "grass"
+    3: "flooded vegetation"
+    4: "crops"
+    5: "shrub and scrub"
+    6: "built area"
+    7: "bare ground"
+    8: "snow and ice"
 
   dataset:
     raw_dataset: 

@@ -2,7 +2,7 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from omegaconf import OmegaConf
 
-from src import ROOT
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 @dataclass(slots=True, kw_only=True)
 class Rawdataset:
@@ -59,6 +59,7 @@ class AppConfig:
 class Config:
     """Top level Configuration class of the application"""
     app_config: AppConfig = field(metadata={"description": "The app configuration"})
+    dynamic_world_classes: dict[int, str] = field(metadata={"description":"A dictionary of Dynamic world classes"})
     dataset: Dataset = field(metadata={"description": "The configuration for the application dataset"})
 
 
@@ -66,12 +67,12 @@ class Config:
 schema = OmegaConf.structured(Config)
 
 # Instantiate config.yaml path
-config_path: Path = ROOT / "src/config/config.yaml"
+config_path: Path = REPO_ROOT / "config/config.yaml"
 
 # Populate repo_root in config file
 OmegaConf.register_new_resolver(
     "repo_root",
-    lambda: str(ROOT),
+    lambda: str(REPO_ROOT),
     replace=True,
 )
 
