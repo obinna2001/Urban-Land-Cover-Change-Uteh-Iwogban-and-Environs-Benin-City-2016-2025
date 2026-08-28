@@ -59,6 +59,7 @@ class AppConfig:
 class Config:
     """Top level Configuration class of the application"""
     app_config: AppConfig = field(metadata={"description": "The app configuration"})
+    dynamic_world_classes: dict[int, str] = field(metadata={"description":"A dictionary of Dynamic world classes"})
     dataset: Dataset = field(metadata={"description": "The configuration for the application dataset"})
 
 

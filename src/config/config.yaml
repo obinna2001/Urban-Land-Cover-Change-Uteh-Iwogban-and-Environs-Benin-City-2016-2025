@@ -3,6 +3,17 @@ config:
     name: ""
     description: ""
 
+  dynamic_world_classes:
+    0: "water"
+    1: "trees"
+    2: "grass"
+    3: "flooded vegetation"
+    4: "crops"
+    5: "shrub and scrub"
+    6: "built area"
+    7: "bare ground"
+    8: "snow and ice"
+
   dataset:
     raw_dataset: 
       aoi_geojson: "${repo_root:}/data/raw/custom_aoi_geojson/custom_aoi.geojson"
