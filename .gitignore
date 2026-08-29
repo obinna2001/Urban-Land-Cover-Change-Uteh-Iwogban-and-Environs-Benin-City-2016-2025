@@ -5,6 +5,8 @@
 .DS_Store
 AGENTS.md
 
+tests/
+
 # Ignore all __pycache__ directories
 __pycache__/
 
@@ -13,3 +15,5 @@ __pycache__/
 *.pyo
 *.pyd
 
+# Streamlit agent skills (environment-specific symlinks)
+.agents/skills/developing-with-streamlit
