@@ -13,7 +13,13 @@ dependencies = [
     "nbformat>=5.10.4",
     "omegaconf>=2.3.1",
     "osmnx>=2.1.1",
+    "pytest>=9.1.1",
     "rasterio>=1.5.0",
     "seaborn>=0.13.2",
     "shapely>=2.1.2",
+    "streamlit>=1.62.0",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
