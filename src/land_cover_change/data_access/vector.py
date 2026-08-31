@@ -98,7 +98,7 @@ def save_shapefile(
         )
 
     if not isinstance(output_path, (str, Path)):
-        raise TypeError("output_path must be either str or Path")
+        raise TypeError(f"output_path must be either str or Path")
 
     file_path = Path(output_path)
 

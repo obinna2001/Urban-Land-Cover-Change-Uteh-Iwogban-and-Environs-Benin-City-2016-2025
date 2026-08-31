@@ -23,7 +23,6 @@ class Rawdataset:
         }
     )
 
-
 @dataclass(slots=True, kw_only=True)
 class Processeddataset:
     """Configuration class for processed dataset"""
@@ -32,7 +31,6 @@ class Processeddataset:
             "descriptiopn": "File path to shapefile of the area of interest"
         }
     )
-
 
 @dataclass(slots=True, kw_only=True)
 class Dataset:
@@ -54,12 +52,42 @@ class AppConfig:
     name: str = field(metadata={"description": "The name of the App."})
     description: str = field(metadata={"description": "The description of the App."})
 
+@dataclass(slots=True, kw_only=True)
+class DynamicWorldClass:
+    """Name and display colour for a Dynamic World class."""
+
+    name: str = field(
+        metadata={
+            "description": "The human-readable Dynamic World class name"
+        }
+    )
+    colour: str = field(
+        metadata={
+            "description": "The hexadecimal display colour for the class"
+        }
+    )
+
+
+@dataclass(slots=True, kw_only=True)
+class DynamicWorldConfig:
+    """Configuration for the Dynamic World class registry."""
+
+    classes: dict[int, DynamicWorldClass] = field(
+        metadata={
+            "description": (
+                "Dynamic World class definitions keyed by raster class value"
+            )
+        }
+    )
+
 
 @dataclass(slots=True, kw_only=True)
 class Config:
     """Top level Configuration class of the application"""
     app_config: AppConfig = field(metadata={"description": "The app configuration"})
-    dynamic_world_classes: dict[int, str] = field(metadata={"description":"A dictionary of Dynamic world classes"})
+    dynamic_world: DynamicWorldConfig = field(
+        metadata={"description": "The Dynamic World configuration"}
+    )
     dataset: Dataset = field(metadata={"description": "The configuration for the application dataset"})
 
 
