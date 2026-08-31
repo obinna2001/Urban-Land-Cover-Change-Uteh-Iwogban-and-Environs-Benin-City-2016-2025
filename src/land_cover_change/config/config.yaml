@@ -3,16 +3,35 @@ config:
     name: "Urban Land Cover Change: Uteh/Iwogban and Environs, Benin City (2016–2025)"
     description: ""
 
-  dynamic_world_classes:
-    0: "water"
-    1: "trees"
-    2: "grass"
-    3: "flooded vegetation"
-    4: "crops"
-    5: "shrub and scrub"
-    6: "built area"
-    7: "bare ground"
-    8: "snow and ice"
+  dynamic_world:
+    classes:
+      0:
+        name: "water"
+        colour: "#419BDF"
+      1:
+        name: "trees"
+        colour: "#397D49"
+      2:
+        name: "grass"
+        colour: "#88B053"
+      3:
+        name: "flooded vegetation"
+        colour: "#7A87C6"
+      4:
+        name: "crops"
+        colour: "#E49635"
+      5:
+        name: "shrub and scrub"
+        colour: "#DFC35A"
+      6:
+        name: "built area"
+        colour: "#C4281B"
+      7:
+        name: "bare ground"
+        colour: "#A59B8F"
+      8:
+        name: "snow and ice"
+        colour: "#B39FE1"
 
   dataset:
     raw_dataset: 
@@ -22,5 +41,4 @@ config:
 
     processed_dataset:
       aoi_shapefile: "${repo_root:}/data/processed/custom_aoi_shapefile/area_of_interest.shp"
-
 
