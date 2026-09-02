@@ -5,8 +5,6 @@
 .DS_Store
 AGENTS.md
 
-tests/
-
 # Ignore all __pycache__ directories
 __pycache__/
 

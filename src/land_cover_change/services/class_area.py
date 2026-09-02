@@ -111,14 +111,23 @@ def build_class_count_table(
         If any raster file exists but cannot be opened or read by Rasterio.
 
     """
+<<<<<<< HEAD
     if not raster_paths:
         raise ValueError(f"{raster_paths!r} cannot be empty.")
 
+=======
+>>>>>>> 446a6a7 (refactor: create custom functions for resuseable logic in 02_inspect_dynamic_world.ipynb)
     if isinstance(raster_paths, (str, Path)):
         raise TypeError(
             "raster_paths must be a sequence of paths, not a single path"
         )
 
+<<<<<<< HEAD
+=======
+    if not raster_paths:
+        raise ValueError(f"{raster_paths!r} cannot be empty.")
+
+>>>>>>> 446a6a7 (refactor: create custom functions for resuseable logic in 02_inspect_dynamic_world.ipynb)
     if not all(isinstance(item, (str, Path)) for item in raster_paths):
         raise TypeError(
             f"Values in {raster_paths!r} must be either str or Path."
@@ -154,4 +163,8 @@ def build_class_count_table(
     # convert index to a column
     land_cover_classes_count_table = land_cover_classes_count_table.reset_index()
 
+<<<<<<< HEAD
     return land_cover_classes_count_table
+=======
+    return land_cover_classes_count_table
+>>>>>>> 446a6a7 (refactor: create custom functions for resuseable logic in 02_inspect_dynamic_world.ipynb)
