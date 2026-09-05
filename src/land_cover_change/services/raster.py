@@ -1,15 +1,20 @@
+import math
 from pathlib import Path
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 import numpy as np
 from matplotlib.colors import to_rgba
 
 import rasterio
+from rasterio import Affine, errors
 from rasterio.crs import CRS
 from rasterio.enums import Resampling
+from rasterio.errors import RasterioIOError
 from rasterio.vrt import WarpedVRT
 from rasterio.warp import transform_bounds
+
+from ..data_access.raster import extract_raster_map_metadata
 
 # ------------------------------------------------------------------------------
 # OUTPUT DATA MODELS
@@ -21,6 +26,17 @@ class RasterMapOverlay:
         tuple[float, float],
         tuple[float, float]
     ]
+
+
+@dataclass(frozen=True, slots=True)
+class AnalysisRaster:
+    """Categorical raster data prepared on a projected analysis grid."""
+
+    data: np.ma.MaskedArray
+    transform: Affine
+    crs: CRS
+    bounds: tuple[float, float, float, float]
+    nodata: float | None
 
 
 # -----------------------------------------------------------------------------
@@ -241,3 +257,277 @@ def prepare_map_overlay(
         image=rgba_image,
         bounds=((south, west), (north, east)),
     )
+
+
+def prepare_analysis_raster(
+    raster_path: str | Path,
+    projected_crs: int = 32631,
+) -> AnalysisRaster:
+    """Prepare a categorical raster on a metre-based projected grid.
+
+    The raster is reprojected in memory using nearest-neighbour resampling so
+    categorical class values are not interpolated. The returned data and grid
+    metadata can be reused by class-area and transition calculations.
+
+    Parameters
+    ----------
+    raster_path : str or pathlib.Path
+        Path to a single-band categorical raster.
+    projected_crs : int, default 32631
+        EPSG code for a projected CRS whose linear unit is the metre. The
+        default is WGS 84 / UTM zone 31N for the current Benin City study
+        area.
+
+    Returns
+    -------
+    AnalysisRaster
+        Masked raster values, affine transform, projected CRS, bounds in the
+        projected CRS, and the raster's NoData value.
+
+    Raises
+    ------
+    TypeError
+        If ``raster_path`` is not a string or ``Path``, or ``projected_crs``
+        is not an integer.
+    FileNotFoundError
+        If ``raster_path`` does not identify an existing file.
+    ValueError
+        If ``projected_crs`` is invalid, geographic, or not metre-based; the
+        raster has no CRS, does not contain exactly one band, or contains no
+        valid pixels after reprojection.
+    rasterio.errors.RasterioIOError
+        If the file exists but Rasterio cannot open, reproject, or read it.
+
+    """
+    if not isinstance(raster_path, (str, Path)):
+        raise TypeError("raster_path must be a string or Path object")
+
+    if isinstance(projected_crs, bool) or not isinstance(projected_crs, int):
+        raise TypeError("projected_crs must be an integer EPSG code")
+
+    try:
+        target_crs = CRS.from_epsg(projected_crs)
+    except errors.CRSError as exc:
+        raise ValueError(
+            f"projected_crs is not a valid EPSG code: {projected_crs!r}"
+        ) from exc
+
+    if not target_crs.is_projected:
+        raise ValueError("projected_crs must identify a projected CRS")
+
+    if target_crs.linear_units_factor[1] != 1.0:
+        raise ValueError("projected_crs must use metres as its linear unit")
+
+    raster_path = Path(raster_path)
+
+    if not raster_path.is_file():
+        raise FileNotFoundError(f"Raster file not found: {raster_path!r}")
+
+    try:
+        with rasterio.open(raster_path) as raster_data:
+            if raster_data.crs is None:
+                raise ValueError(
+                    f"{raster_path.name!r} does not have a defined coordinate "
+                    "reference system"
+                )
+
+            if raster_data.count != 1:
+                raise ValueError(
+                    f"{raster_path.name!r} must contain exactly one raster band"
+                )
+
+            source_nodata = raster_data.nodata
+
+            with WarpedVRT(
+                raster_data,
+                crs=target_crs,
+                resampling=Resampling.nearest,
+            ) as projected_raster:
+                land_cover = projected_raster.read(1, masked=True)
+
+                if land_cover.count() == 0:
+                    raise ValueError(
+                        f"{raster_path.name!r} contains no valid "
+                        "land-cover pixels"
+                    )
+
+                projected_transform = projected_raster.transform
+                projected_bounds = tuple(
+                    float(coordinate)
+                    for coordinate in projected_raster.bounds
+                )
+
+        return AnalysisRaster(
+            data=land_cover,
+            transform=projected_transform,
+            crs=target_crs,
+            bounds=(
+                projected_bounds[0],
+                projected_bounds[1],
+                projected_bounds[2],
+                projected_bounds[3],
+            ),
+            nodata=source_nodata,
+        )
+    except errors.RasterioIOError as exc:
+        raise RasterioIOError(
+            f"Unable to prepare raster file {raster_path.name!r} for analysis"
+        ) from exc
+
+
+def validate_raster_alignment(
+    raster_paths: Sequence[str | Path],
+) -> None:
+    """Validate that multiple rasters share the same spatial grid.
+
+    The rasters are considered aligned when they have the same coordinate
+    reference system, array shape, and affine transform. This ensures that
+    pixels at corresponding row and column positions represent the same
+    geographical areas.
+
+    Parameters
+    ----------
+    raster_paths : Sequence[str or pathlib.Path]
+        Paths to two or more raster files whose spatial alignment will be
+        validated.
+
+    Returns
+    -------
+    None
+
+    Raises
+    ------
+    TypeError
+        If ``raster_paths`` is not a non-string sequence or contains values
+        other than strings and ``Path`` objects.
+    ValueError
+        If fewer than two raster paths are supplied, a supplied path is not
+        a file, a raster has no coordinate reference system, or the rasters
+        do not have matching spatial grids.
+    FileNotFoundError
+        If any supplied raster path does not exist.
+    rasterio.errors.RasterioIOError
+        If Rasterio cannot open or read one of the raster files.
+
+    """
+    if (
+        isinstance(raster_paths, (str, Path))
+        or not isinstance(raster_paths, Sequence)
+    ):
+        raise TypeError(
+            "raster_paths must be a non-string sequence of file paths"
+        )
+
+    if not all(
+        isinstance(raster_path, (str, Path))
+        for raster_path in raster_paths
+    ):
+        raise TypeError(
+            "raster_paths must contain only str or Path objects"
+        )
+
+    if len(raster_paths) < 2:
+        raise ValueError(
+            "raster_paths must contain at least two raster file paths"
+        )
+
+    normalised_paths: list[Path] = [
+        Path(raster_path)
+        for raster_path in raster_paths
+    ]
+
+    missing_paths = [
+        raster_path
+        for raster_path in normalised_paths
+        if not raster_path.exists()
+    ]
+
+    if missing_paths:
+        formatted_paths = ", ".join(map(str, missing_paths))
+        raise FileNotFoundError(
+            f"Raster paths do not exist: {formatted_paths}"
+        )
+
+    non_file_paths = [
+        raster_path
+        for raster_path in normalised_paths
+        if not raster_path.is_file()
+    ]
+
+    if non_file_paths:
+        formatted_paths = ", ".join(map(str, non_file_paths))
+        raise ValueError(
+            f"Raster paths are not files: {formatted_paths}"
+        )
+
+    reference_path = normalised_paths[0]
+    reference_metadata = extract_raster_map_metadata(reference_path)
+
+    alignment_fields = (
+        "coordinate_reference_system", 
+        "shape", 
+        "transform"
+    )
+
+    for raster_path in normalised_paths[1:]:
+        raster_metadata = extract_raster_map_metadata(raster_path)
+
+        mismatched_fields = [
+            field
+            for field in alignment_fields
+            if reference_metadata[field] != raster_metadata[field]
+        ]
+
+        if mismatched_fields:
+            formatted_fields = ", ".join(mismatched_fields)
+
+            raise ValueError(
+                f"Raster alignment mismatch between "
+                f"{reference_path.name!r} and {raster_path.name!r}. "
+                f"Different metadata fields: {formatted_fields}."
+            )
+
+
+def calculate_pixel_area(transform: Affine) -> float:
+    """Calculate the coordinate-space area represented by one raster pixel.
+
+    The pixel area is calculated as the absolute determinant of the linear
+    part of the affine transform. This accounts for pixel rotation and shear.
+
+    Parameters
+    ----------
+    transform : affine.Affine
+        Affine transform connecting raster row and column positions to
+        coordinates in the raster's coordinate reference system.
+
+    Returns
+    -------
+    float
+        Area represented by one pixel, expressed in the square units of the
+        raster's coordinate reference system.
+
+    Raises
+    ------
+    TypeError
+        If ``transform`` is not an ``Affine`` object.
+    ValueError
+        If the calculated pixel area is zero, infinite, or NaN.
+
+    """
+
+    if not isinstance(transform, Affine):
+        raise TypeError("transform must be an Affine object")
+
+    pixel_area = abs(
+        transform.a * transform.e
+        - transform.b * transform.d
+    )
+
+    pixel_area = float(pixel_area)
+
+    if not math.isfinite(pixel_area) or pixel_area <= 0:
+        raise ValueError(
+            "The affine transform produces an invalid pixel area"
+        )
+
+    return pixel_area
