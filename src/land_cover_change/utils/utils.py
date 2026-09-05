@@ -1,3 +1,6 @@
+import re
+from pathlib import Path
+
 import rasterio
 from pathlib import Path
 from rasterio.crs import CRS
@@ -55,3 +58,51 @@ def prepare_land_cover_raster(raster_path: Path):
             "resolution": resolution,
             "transform": transform
         }   
+
+
+def extract_year(path: str | Path) -> int:
+    """Extract a single four-digit year from a file name.
+
+    The function identifies a year between 1900 and 2099. The year must not
+    be immediately preceded or followed by another digit. Only the file name
+    is searched; years appearing in parent directory names are ignored.
+
+    Parameters
+    ----------
+    path : str or pathlib.Path
+        File path or file name containing the year to extract.
+
+    Returns
+    -------
+    int
+        Four-digit year extracted from the file name.
+
+    Raises
+    ------
+    TypeError
+        If ``path`` is neither a string nor a ``Path`` object.
+    ValueError
+        If the file name contains no valid year or contains more than one
+        valid year.
+
+    """
+    if not isinstance(path, (str, Path)):
+        raise TypeError("path must be a str or Path object")
+
+    year_pattern = r"(?<!\d)(?:19|20)\d{2}(?!\d)"
+    file_name = Path(path).name
+    year_matches = re.findall(year_pattern, file_name)
+
+    if not year_matches:
+        raise ValueError(
+            f"No valid year was found in file name {file_name!r}"
+        )
+
+    if len(year_matches) > 1:
+        raise ValueError(
+            f"Multiple valid years were found in file name {file_name!r}"
+        )
+
+    return int(year_matches[0])
+
+    
