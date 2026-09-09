@@ -9,6 +9,14 @@ transition_page = st.Page("views/transition_analysis.py", title="Class Transitio
 
 pages = st.navigation([home_page, map_page, area_page, transition_page], position='top')
 
-# 3. Configure common page elements and run
-st.set_page_config(page_title="My Multi-Page App", layout="centered")
+# Configure common page elements and run
+st.set_page_config(page_title="My Multi-Page App", layout="wide")
 pages.run()
+
+# set footer
+st.divider()
+with st.container(horizontal_alignment="distribute"):
+    st.caption(
+        "Developed as a reproducible land-cover change analysis using "
+        "Python, Google Earth Engine, Dynamic World and Streamlit."
+    )
