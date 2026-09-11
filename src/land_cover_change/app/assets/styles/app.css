@@ -1,0 +1,32 @@
+h1 {
+    font-family: serif, "Merriweather";
+    font-size: 2.6rem;
+    font-variant: no-common-ligatures tabular-nums;
+
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-family: serif, "Merriweather";
+    font-variant: no-common-ligatures tabular-nums;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em
+}
+
+[data-testid="stMarkdownContainer"] {
+    text-align: justify;
+    font-size: 1.1rem;
+    font-family: serif, "Merriweather";
+    line-height: 1.65;
+    font-variant: no-common-ligatures tabular-nums;
+}
+
+.st-key-main-page-title {
+    background-color: burlywood;
+
+}
+
+.st-key-footer {
+    margin-top: 3rem;
+    font-size: 1rem;
+}
