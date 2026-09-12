@@ -38,14 +38,54 @@ load_app_style()
 
 page.run()
 
-with st.container(key="footer"):
-    st.html(
-        "Developed as a reproducible land-cover change analysis using Python, Google Earth Engine, Dynamic World and Streamlit.",
-        unsafe_allow_javascript=True,
+st.html("<h2>Explore the analysis</h2>")
+with st.container(horizontal=True):
+    st.page_link("views/map.py", label="LULC map", icon=":material/map:")
+    st.page_link(
+        "views/class_area_analysis.py",
+        label="Class area analysis",
+        icon=":material/analytics:",
     )
-# # Keep shared project attribution at the bottom of every page.
-# with st.container(key="app_footer", horizontal_alignment="center"):
-#     st.caption(
-#         "Developed as a reproducible land-cover change analysis using "
-#         "Python, Google Earth Engine, Dynamic World and Streamlit."
-#     )
+    st.page_link(
+        "views/transition_analysis.py",
+        label="Transition analysis",
+        icon=":material/moving:",
+    )
+
+
+with st.container(key="footer"):
+    column_one, column_two, column_three = st.columns(3)
+
+    with column_one:
+        st.html("<h2>Navigation</h2>")
+        st.page_link("view/map.py", label="LULC map")
+        st.page_link("views/class_area_analysis.py", label="Class area analysis")
+        st.page_link("views/transition_analysis.py", label="Transition analysis")
+
+    with column_two:
+        st.html("<h2>Resource</h2>")
+        st.markdown(
+            """
+            <a href=https://data.grid3.org/datasets/GRID3::grid3-nga-operational-wards-v1-0/about>Administrative Boundaries</a>
+            """
+        )
+        st.markdown(
+            """
+            <a href=https://dynamicworld.app/>Dynamic World V1</a>
+            """
+        )
+        st.markdown(
+            """
+            <a href=https://code.earthengine.google.com/ce4354f43bb0776d1be7e5984d8a7b79>Google Earth Engine Script</a>
+            """
+        )
+
+    with column_three:
+        st.html("<h2>Contact</h2")
+        st.markdown("<a href=https://okeyobinna2001@gmail.com>Email</a>")
+        st.markdown("<a href=https://github.com/obinna2001>GitHub</a>")
+
+    st.html(
+        "<p>&copy; 2026 Okey Obinna. All rights reserved.</p>" 
+    )
+
