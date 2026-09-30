@@ -3,7 +3,7 @@ from pathlib import Path
 import streamlit as st
 
 ROOT: Path = Path(__file__).resolve().parents[1]
-CSS_STYLE_FILE: Path = ROOT / "assets" / "styles" / "app.css"
+CSS_STYLE_FILE: Path = ROOT / "assets" / "styles" / "styles.css"
 
 def load_app_style() -> None:
     """Load the application shared CSS stylesheet"""

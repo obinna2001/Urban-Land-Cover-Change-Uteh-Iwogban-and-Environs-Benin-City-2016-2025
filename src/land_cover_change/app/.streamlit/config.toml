@@ -1,2 +1,16 @@
 [server]
 enableStaticServing = true
+
+[theme]
+base = "dark"
+
+primaryColor = "#0B0F19"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#121826"
+textColor = "#303936"
+
+linkColor = "#234F3E"
+linkUnderline = false
+
+borderColor = "#2A3447"
+baseRadius = "0.6rem"
