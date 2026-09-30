@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "contextily>=1.7.1",
     "folium>=0.20.0",
     "geopandas>=1.1.4",
     "ipykernel>=7.3.0",
@@ -15,6 +16,7 @@ dependencies = [
     "osmnx>=2.1.1",
     "pytest>=9.1.1",
     "rasterio>=1.5.0",
+    "rioxarray>=0.23.0",
     "seaborn>=0.13.2",
     "shapely>=2.1.2",
     "streamlit>=1.62.0",

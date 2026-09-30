@@ -1,42 +1,66 @@
 import streamlit as st
 
 
+with st.container(key="title-section"):
+    with st.container(key="title-content"):
+        st.markdown(
+            """
+                <p class="hero-eyebrow">
+                    2016–2025 · BENIN CITY, NIGERIA
+                </p>
 
-with st.container(key="main-page-title"):
-    st.html("<h1>Urban Land Cover Change: Uteh/Iwogban and Environs</h1>")
-    st.caption(
-        "Exploring land-cover patterns and change in Benin City, "
-        "Edo State, Nigeria (2016–2025)"
-    )
+                <h1 class="hero-title">
+                    How is the landscape around Uteh and Iwogban changing?
+                </h1>
+                
+                <p class="hero-lead">
+                    An interactive study of land-cover patterns across a 57.64 km² peri-urban landscape, 
+                    using Dynamic World imagery 2016, 2020 and 2025
+                </p>
+            """,
+            unsafe_allow_html=True,
+        )
 
-with st.container():
-    st.html('<h2>Introduction</h2>')
+with st.container(key="main-content"):
     st.markdown(
-        """This project examines and quantifies land-cover change in part of Umagbae South Ward, Uhunmwonde Local Government
-        Area of Edo State, Nigeria. The results provide evidence of observed spatial change, but they should not be interpreted 
-        as proving that every change was caused exclusively by urbanisation.    <br><br>
-        This project is also a personal inquiry. Having spent much of the past decade in and around the study area, 
-        I wanted to understand and communicate how its landscape has changed over time. The analysis compares Dynamic 
-        World land-cover maps for 2016, 2020 and 2025. Because the selected imagery represents January and February, 
-        seasonally responsive classes—particularly water, grass, crops, flooded vegetation, and shrub and scrub—should 
-        be interpreted in relation to that observation period.""", 
+        """
+            <p class="important-note">
+                This project began as a personal inquiry into the extent to which different land-cover classes have changed 
+                across Uteh/Iwogban and its environs. Having spent much of the past decade in and around the study area, 
+                I wanted to examine these changes systematically and communicate how the landscape has evolved over time.
+            </p>   
+            <p>
+            <span style={font-weight: bold}>Urban land cover change: Uteh/Iwogban and environs <span> examines and quantifies land-cover change in part of Umagbae South Ward, Uhunmwonde Local Government
+            Area of Edo State, Nigeria. The results provide evidence of observed spatial change, but they should not be interpreted 
+            as proving that every change was caused exclusively by urbanisation. 
+            
+            The analysis compares Dynamic World land-cover maps for 2016, 2020 and 2025. Because the selected imagery represents January and February, 
+            seasonally responsive classes—particularly water, grass, crops, flooded vegetation, and shrub and scrub—should 
+            be interpreted in relation to that observation period.
+            </p>
+        """, 
         unsafe_allow_html=True
     )
 
-with st.container():
     st.html("<h2>Study Area</h2>")
     st.markdown(
-        """The study area encompasses approximately <em>57.64 km</em> within Umagbae South Ward, Uhunmwonde Local Government
-        Area, Edo State. It includes Uteh, Iwogban and surrounding parts of Akiuwa, Edosowan and Iguenan, extending
-        from <em>6.368957° N</em> to <em>6.454160° N</em> and <em>5.638733° E</em> to <em>5.733318° E</em>. 
-        Located northeast of Benin City, the area captures a peri-urban landscape where settlement expansion, agriculture and remnant
-        vegetation coexist. This combination makes it well suited for examining land-cover change between 2016 and 2025.
+        """
+        <p> 
+            The study area covers approximately 57.64 km² within Umagbae South Ward, Uhunmwonde Local Government Area, 
+            Edo State, Nigeria. It includes Uteh, Iwogban and surrounding parts of Akiuwa, Edosowan and Iguenan. 
+            Its geographic extent ranges from 6.368957° N to 6.454160° N and from 5.638733° E to 5.733318° E.
+        </p>    
+        <p> 
+            Located northeast of Benin City, the study area represents a peri-urban landscape where expanding settlements,
+            agricultural land and remnant vegetation coexist. This combination makes it well suited for examining land-cover
+            patterns and changes between 2016 and 2025.
+        </p>
+        <p>
+            The study-area boundary was projected to WGS 84 / UTM Zone 31N (EPSG:32631) before its area was calculated. 
+            The coordinates above represent its geographic extent in latitude and longitude.
+        </p>
         """,
         unsafe_allow_html=True
-    )
-    st.info(
-        "The AOI area was calculated from the project boundary after projection to EPSG:32631; the coordinates " \
-        "describe its geographic bounds."
     )
 
     st.html("<h2>Climate and Vegetation</h2>")
@@ -52,6 +76,7 @@ with st.container():
         """,
         unsafe_allow_html=True
     )
+
     st.html("<h2>Socioeconomic Activity</h2>")
     st.markdown(
         """
@@ -66,13 +91,21 @@ with st.container():
     st.html("<h2>Data sources</h2>")
     st.markdown(
         """
-        **Administrative boundaries — <a href=https://data.grid3.org/datasets/GRID3::grid3-nga-operational-wards-v1-0/about>GRID3 Nigeria Operational Wards v1.0</a>
+        Administrative boundaries — 
+        <a target="_blank" 
+            href="https://data.grid3.org/datasets/GRID3::grid3-nga-operational-wards-v1-0/about">
+            GRID3 Nigeria Operational Wards v1.0
+        </a>
 
         The GRID3 ward-level boundary dataset was used to identify the administrative
         location of the study area and provide the spatial reference for preparing its
         boundary.
 
-        **Land use and land cover — <a href=https://dynamicworld.app/> Dynamic World V1</a>
+        Land use and land cover — 
+        <a target="_blank" 
+            href="https://dynamicworld.app/">
+            Dynamic World V1
+        </a>
 
         The land-cover maps were obtained from Dynamic World V1, a global near-real-time
         dataset produced by Google in partnership with the National Geographic Society
@@ -90,29 +123,41 @@ with st.container():
     with st.expander("Dynamic World technical details"):
         st.markdown(
             """
-    - **Spatial resolution:** 10 metres
-    - **Spectral basis:** Sentinel-2 bands B2, B3, B4, B5, B6, B7, B8, B11 and B12
-    - **Output:** Nine probability bands and one categorical label band
+            - **Spatial resolution:** 10 metres
+            - **Spectral basis:** Sentinel-2 bands B2, B3, B4, B5, B6, B7, B8, B11 and B12
+            - **Output:** Nine probability bands and one categorical label band
 
-    Further technical information is available in the
-    [Google Earth Engine data catalogue](https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1)
-    and the
-    [Dynamic World publication](https://www.nature.com/articles/s41597-022-01307-4).
-    """
+            Further technical information is available in the
+            <a target="_blank" 
+                href="https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1">
+                Google Earth Engine data catalogue
+            </a>
+            and the
+            <a target="_blank" 
+                href="https://www.nature.com/articles/s41597-022-01307-4">
+                Dynamic World publication
+            </a>.
+            """,
+            unsafe_allow_html=True
         )
 
-    st.markdown(
-        """
-    **Data access and export — [Google Earth Engine script](https://code.earthengine.google.com/ce4354f43bb0776d1be7e5984d8a7b79)**
+        st.markdown(
+            """
+            Data access and export — 
+            <a target="_blank"
+                href="https://code.earthengine.google.com/ce4354f43bb0776d1be7e5984d8a7b79">
+                Google Earth Engine script
+            </a>
 
-    Google Earth Engine was used to access the Dynamic World collection, select the
-    study years and area, and export the resulting land-cover maps as GeoTIFF files
-    for analysis in Python. The linked script documents this acquisition and export
-    process.
-    """
-    )
+            Google Earth Engine was used to access the Dynamic World collection, select the
+            study years and area, and export the resulting land-cover maps as GeoTIFF files
+            for analysis in Python. The linked script documents this acquisition and export
+            process.
+            """,
+            unsafe_allow_html=True
+        )
 
-with st.container():
+    
     st.html("<h2>Key findings</h2>")
     area_column, built_column, trees_column = st.columns(3)
 
@@ -136,18 +181,4 @@ with st.container():
     st.caption(
         "Land-cover areas are derived from classified raster pixels and may not "
         "exactly match the vector AOI area because boundary pixels are discrete."
-    )
-
-st.html("<h2>Explore the analysis</h2>")
-with st.container(horizontal=True):
-    st.page_link("views/map.py", label="LULC map", icon=":material/map:")
-    st.page_link(
-        "views/class_area_analysis.py",
-        label="Class area analysis",
-        icon=":material/analytics:",
-    )
-    st.page_link(
-        "views/transition_analysis.py",
-        label="Transition analysis",
-        icon=":material/moving:",
     )

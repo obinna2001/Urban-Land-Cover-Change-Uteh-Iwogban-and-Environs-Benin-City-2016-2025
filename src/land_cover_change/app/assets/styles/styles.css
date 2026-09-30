@@ -1,0 +1,399 @@
+/* ------------------------------ Global configuration -------------------------------*/
+:root {
+    --sage: #e2ebe0;
+    --sage-border: #cfdbcc;
+    --ink: #111827;
+    --navy: #16264a;
+    --muted-text: #3f4b46;
+    --page-gutter: clamp(1rem, 3vw, 2.5rem);
+    --content-width: 90vw;
+    --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    --nav-height: clamp(4.15rem, 5vw, 5.5rem);
+    --nav-title-gap: clamp(0.25rem, 0.6vw, 0.625rem);
+    --hero-y-padding: clamp(3rem, 9vw, 5rem);
+    --nav-link-colour: #16284A;
+    --nav-active-colour: #b95536;
+    --nav-active-thickness: 3px;
+    --nav-link-padding: 0.875rem;
+}
+
+/* Navigation container */
+header[data-testid="stHeader"] {
+    height: var(--nav-height);
+    min-height: var(--nav-height);
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #E2E8EE;
+}
+
+header[data-testid="stHeader"] [data-testid="stToolbar"] {
+    height: 100%;
+    min-height: 0;
+}
+
+/* Align the top-navigation row to the right */
+header[data-testid="stHeader"] [data-testid="stToolbar"] > div > div:has(
+    [data-testid="stTopNavLinkContainer"]
+) {
+    height: calc(var(--nav-height) - 1px);
+    padding-inline: var(--page-gutter);
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+/* Let every navigation link occupy the navigation container's height */
+header[data-testid="stHeader"] [data-testid="stTopNavLinkContainer"] {
+    height: calc(var(--nav-height) - 1px);
+    display: flex;
+    align-items: stretch;
+}
+
+/* Navigation link layout */
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"] {
+    position: relative;
+    display: flex;
+    height: 100%;
+    margin-block: 0;
+    padding-inline: var(--nav-link-padding);
+    align-items: center;
+    border-radius: 0;
+}
+
+/* Remove Streamlit backgrounds from every interaction state */
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"],
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"]:hover,
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"]:active,
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"]:focus,
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"]:focus-visible,
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"] {
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Add special text colour to selected links */
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"],
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"] * {
+    color: var(--nav-link-colour) !important;
+}
+
+/* Add custom indicator to show selected navigation page */
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    right: var(--nav-link-padding);
+    bottom: -1px;
+    left: var(--nav-link-padding);
+    height: var(--nav-active-thickness);
+    background-color: var(--nav-active-colour);
+    border-radius: 0;
+}
+
+header[data-testid="stHeader"] [data-testid="stToolbar"] {
+    height: 100%;
+    min-height: 0;
+}
+
+
+/* Make Title and footer container full screen */
+[data-testid="stMainBlockContainer"] {
+    max-width: none;
+    padding-inline: 0;
+    padding-top: var(--nav-height);
+}
+
+.st-key-title-section,
+.st-key-footer {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box
+}
+
+/* keep the content within the containers readable and aligned */
+.st-key-title-content,
+.st-key-main-content,
+.st-key-footer-content {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+    box-sizing: border-box;
+}
+
+
+/* ------------- Title container and content -------------------------*/
+.st-key-title-section {
+    background-color: var(--sage);
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: var(--sage-border);
+    padding: var(--hero-y-padding) var(--page-gutter)
+}
+
+.st-key-title-content {
+    font-family: var(--font-sans);
+    padding: var(--hero-y-padding) var(--page-gutter);
+    margin-inline: auto;
+    max-width: var(--content-width);
+}
+
+.st-key-title-content .hero-eyebrow {
+    margin: 0 0;
+    color: var(--navy);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.st-key-title-content .hero-title {
+    color: var(--ink);
+    font-size: clamp(2.375rem, 5.4vw, 3.975rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 1.2
+}
+
+.st-key-title-content .hero-lead {
+    margin: 1.625rem 0 0;
+    color: var(--muted-text);
+    font-size: 1.27rem;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+
+/* /* Web app global screen display setting
+:root {
+    --page-gutter: clamp(1rem, 3vw, 3rem);
+    --content-width: 72rem;
+    --font-family: "Montserrat", sans-serif;
+}
+
+/* Set streamlit default display setting to 0 */
+/* [data-testid="stMainBlockContainer"] {
+    max-width: none;
+    padding: 0;
+} */
+
+/* Title section */
+/* .st-key-title-section {
+    background-color: 	#234F3E;
+}
+
+/* Footer Container/screen display */
+/* .st-key-footer {
+    margin-top: 3rem;
+    background-color: #111B19;
+} */ 
+
+/* center the contents of all three sections */
+/* .st-key-title-content,
+.st-key-main-content,
+.st-key-footer-content {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter)
+} */
+
+/* vertical spacing inside the title */
+/* .st-key-title-content {
+    padding-block: 4rem;
+    font-family: var(--font-family);
+    text-align: center;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+} */
+
+/* vertical spacing around the main page */
+/* .st-key-main-content {
+    padding-block: 3rem;
+} */
+
+/* vertical spacing inside the footer */
+/* .st-key-footer-content {
+    padding-block: 2rem;
+} */
+
+/* ----------------------------------------- TEXT -------------------------------------- */
+/* h1 elements */
+/* h1 {
+    font-family: var(--font-family);
+    font-size: 2.6rem;
+    line-height: 1.15;
+} */
+
+/* h2 elements */
+/* h2 {
+    font-size: 1.8rem;
+    font-family: var(--font-family);
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    line-height: 1.25;
+} */
+
+/* streamlit markdown text*/
+/* [data-testid="stMarkdownContainer"] {
+    text-align: justify;
+    font-size: 1.05rem;
+    font-family: var(--font-family);
+    line-height: 1.7;
+    font-weight: 600;
+} */
+
+/* streamlit caption text */
+/* [data-testid="stCaptionContainer"] {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 1.45;
+    text-align: center;
+    color: white
+} */
+
+/* Important note*/
+/* .st-key-main-content .important-note {
+    font-style: italic;
+    font-weight: 400;
+    color: #555555;
+} */
+
+/* Footer h2 elements */
+/* .st-key-footer h2 {
+    font-size: 1.1rem;
+    font-family: var(--font-family);
+    font-variant: no-common-ligatures tabular-nums;
+
+} */
+
+/* Footer paragraph (p) element */
+/* .st-key-footer p {
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    font-variant: no-common-ligatures tabular-nums;
+} */
+
+/* Footer links*/
+/* Normal appearance of every footer link */
+/* .st-key-footer a {
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    font-variant: no-common-ligatures tabular-nums;
+    text-decoration: none;
+} */
+/* streamlit navigation link (page_link()) */
+/* .st-key-footer [data-testid="stPageLink-NavLink"] [data-testid="stMarkdownContainer"] {
+    font-size: 0.9rem;
+    font-family: var(--font-family);
+    font-variant: no-common-ligatures tabular-nums;
+} */
+
+/* anchor elements */
+/* a,
+a:link,
+a:visited {
+    color: white;
+    text-decoration: none;
+} */
+/* 
+a:hover,
+a:focus-visible,
+a:focus {
+    color: white;
+    text-decoration: underline;
+} */
+
+/* ------------------ Footer -------------------------- */
+/* Footer Container/screen display */
+/* .st-key-footer {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 3rem;
+    background-color: #111B19;
+    padding: 2rem var(--page-gutter);
+} */
+
+/* Footer h2 elements */
+/* .st-key-footer h2 {
+    font-size: 1.1rem;
+    font-family: "Merriweather", Georgia, serif;
+    font-variant: no-common-ligatures tabular-nums;
+
+} */
+
+/* Footer paragraph (p) element */
+/* .st-key-footer p {
+    font-size: 0.9rem;
+    font-family: "Source Sans 3", Arial, sans-serif;
+    font-variant: no-common-ligatures tabular-nums;
+} */
+
+/* Footer links*/
+/* Normal appearance of every footer link */
+/* .st-key-footer a {
+    font-size: 0.9rem;
+    font-family: "Source Sans 3", Arial, sans-serif;
+    font-variant: no-common-ligatures tabular-nums;
+    text-decoration: none;
+} */
+/* streamlit navigation link (page_link()) */
+/* .st-key-footer [data-testid="stPageLink-NavLink"] [data-testid="stMarkdownContainer"] {
+    font-size: 0.9rem;
+    font-family: "Source Sans 3", Arial, sans-serif;
+    font-variant: no-common-ligatures tabular-nums;
+} */
+
+/* Appearance when mouse is hovered a link or selected using a keyboard */
+/* .st-key-footer a:hover,
+.st-key-footer a:focus-visible,
+.st-key-footer a:focus {
+    color: white;
+    text-decoration: underline;
+
+} */
+/* Appearance when a mouse is hovered a page navigation link or selected using a keyboard */
+/* .st-key-footer [data-testid="stPageLink-NavLink"],
+.st-key-footer [data-testid="stPageLink-NavLink"]:hover,
+.st-key-footer [data-testid="stPageLink-NavLink"]:active,
+.st-key-footer [data-testid="stPageLink-NavLink"]:focus,
+.st-key-footer [data-testid="stPageLink-NavLink"]:focus-visible {
+    background-color: transparent;
+} */
+
+/* .st-key-footer [data-testid="stPageLink-NavLink"]:hover span,
+.st-key-footer [data-testid="stPageLink-NavLink"]:focus-visible span {
+    color: white;
+    text-decoration: underline;
+} */
+
+/* link arrangement */
+/* custom class arrangement */
+/* .st-key-footer .footer-link-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+} */
+
+/* .st-key-footer .footer-link-list a {
+    display: block;
+    margin: 0.3rem;
+    line-height: 1.4;
+} */
+
+/* Adjust page_link() to custom arrangement */
+/* .st-key-footer [data-testid="stPageLink-NavLink"] {
+    margin: 0.3rem;
+    padding-block: 0.1rem;
+    line-height: 1.4;
+} */
+
+/* Unify display colour for text in footer */
+/* .st-key-footer a,
+.st-key-footer [data-testid="stPageLink-NavLink"] span {
+    color: white;
+}  */
