@@ -5,17 +5,34 @@
     --ink: #111827;
     --navy: #16264a;
     --muted-text: #3f4b46;
-    --page-gutter: clamp(1rem, 3vw, 2.5rem);
-    --content-width: 90vw;
+    --page-gutter: clamp(1rem, 2vw, 2.5rem);
+    --content-width: 88vw;
     --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --hero-y-padding: clamp(2.7rem, 7vw, 5.5rem);
 
+    /* Navigation */
     --nav-height: clamp(4.15rem, 5vw, 5.5rem);
     --nav-title-gap: clamp(0.25rem, 0.6vw, 0.625rem);
-    --hero-y-padding: clamp(3rem, 9vw, 5rem);
     --nav-link-colour: #16284A;
     --nav-active-colour: #b95536;
     --nav-active-thickness: 3px;
     --nav-link-padding: 0.875rem;
+    --nav-font-family: var(--font-sans);
+    --nav-font-size: clamp(0.9rem, 1vw, 1.5rem);
+
+    /* Home page */
+    --section-space-y: clamp(0.95rem, 7vw, 4.3rem);
+    --surface-default: #FFFFFF;
+    --surface-muted: #f4f7f2;
+    --section-rule: #e2e8ee;
+    --section-scroll-offset: calc(var(--nav-height) + 1rem);
+
+}
+
+/* ------------------------ DEFAULT/GENERAL ------------------- */
+/* Remove the spaces between page title and footer with the page content */
+[data-testid="stMainBlockContainer"] > div[data-testid="stVerticalBlock"] {
+    gap: 0;
 }
 
 /* Navigation container */
@@ -62,6 +79,14 @@ header[data-testid="stHeader"] a[data-testid="stTopNavLink"] {
     border-radius: 0;
 }
 
+/* customise the navigation link text */
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"],
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"] span,
+header[data-testid="stHeader"] a[data-testid="stTopNavLink"] p {
+    font-family: var(--nav-font-family) !important;
+    font-size: var(--nav-font-size) !important;
+}
+
 /* Remove Streamlit backgrounds from every interaction state */
 header[data-testid="stHeader"] a[data-testid="stTopNavLink"],
 header[data-testid="stHeader"] a[data-testid="stTopNavLink"]:hover,
@@ -92,13 +117,7 @@ header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"
     border-radius: 0;
 }
 
-header[data-testid="stHeader"] [data-testid="stToolbar"] {
-    height: 100%;
-    min-height: 0;
-}
-
-
-/* Make Title and footer container full screen */
+/* --------------------  Make Title and footer container full screen ------------------------ */
 [data-testid="stMainBlockContainer"] {
     max-width: none;
     padding-inline: 0;
@@ -114,29 +133,22 @@ header[data-testid="stHeader"] [data-testid="stToolbar"] {
 
 /* keep the content within the containers readable and aligned */
 .st-key-title-content,
-.st-key-main-content,
 .st-key-footer-content {
+    width: 100%;
     max-width: var(--content-width);
     margin-inline: auto;
     padding-inline: var(--page-gutter);
     box-sizing: border-box;
+    font-family: var(--font-sans);
 }
 
-
-/* ------------- Title container and content -------------------------*/
+/* ------------- Title container and it's content -------------------------*/
 .st-key-title-section {
     background-color: var(--sage);
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: var(--sage-border);
-    padding: var(--hero-y-padding) var(--page-gutter)
-}
-
-.st-key-title-content {
-    font-family: var(--font-sans);
-    padding: var(--hero-y-padding) var(--page-gutter);
-    margin-inline: auto;
-    max-width: var(--content-width);
+    padding-block: var(--hero-y-padding)
 }
 
 .st-key-title-content .hero-eyebrow {
@@ -153,18 +165,184 @@ header[data-testid="stHeader"] [data-testid="stToolbar"] {
     font-size: clamp(2.375rem, 5.4vw, 3.975rem);
     font-weight: 500;
     letter-spacing: -0.045em;
-    line-height: 1.2
+    line-height: 0.98
 }
 
 .st-key-title-content .hero-lead {
-    margin: 1.625rem 0 0;
+    margin: 1.225rem 0 0;
     color: var(--muted-text);
     font-size: 1.27rem;
     font-weight: 400;
     line-height: 1.65;
 }
 
+/* ------------------------------- HOME PAGE CONTENT ----------------------------------- */
+/* Make main-content key container extend to the full screen */
+.st-key-main-content {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+/* Remove the gap between the nested containers in main-content */
+div[data-testid="stVerticalBlock"].st-key-main-content {
+    gap: 0;
+}
+
+/* Define the screen width of the nested containers in main-content to the full screen */
+.st-key-project-overview,
+.st-key-method-section,
+.st-key-sources-section,
+.st-key-key-findings-section {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    border-bottom: 1px solid var(--section-rule)
+}
+
+/* Define the screen width of the content within the nested containers in main-content */
+/* They will match with the screen with of the title container content */
+.section-shell,
+.st-key-key-findings-content {
+    width: 100%;
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: var(--section-space-y) var(--page-gutter);
+    box-sizing: border-box
+}
+
+/* Applying background colours to the nested containers in main-content */
+.st-key-project-overview,
+.st-key-sources-section {
+    background-color: var(--surface-muted);
+}
+
+.st-key-method-section,
+.st-key-key-findings-section {
+    background-color: var(--surface-default)
+}
+
+/* ----- style nested containers in main-content----- */
+/*  Style the section label of all nested containers*/
+.st-key-main-content .section-label {
+    margin: 0 0 0.9375rem;
+    color: var(--muted-text);
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    font-weight: 500;
+    letter-spacing: 0.08rem;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* ----------- Project Overview container------------ */
+/* page arrangement */
+.project-layout {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.45fr)
+        minmax(16.25rem, 0.75fr);
+    gap: clamp(3rem, 6vw, 4.4rem);
+    align-items: start;
+    font-family: var(--font-sans)
+}
+
+/* Title style */
+.project-copy h2 {
+    margin: 0 0 1.125rem;
+    color: var(--ink);
+    font-size: clamp(1.875rem, 2.4vw, 2rem);
+    font-weight: 440;
+    line-height: 1.2;
+    letter-spacing: -0.025rem;
+}
+
+/* Target the content Paragraph */
+.project-copy > p:not(.section-label) {
+    font-size: 1.02rem;
+    line-height: 1.68;
+    font-weight: 400;
+    max-width: 42.5rem;
+    color: var(--muted-text);
+    text-align: justify;
+}
+
+/* set the bottom margin of the last line in above p to 0 */
+.project-copy > p:last-child {
+    margin-bottom: 0;
+}
+
+/* Study area tile heading */
+#study-area-heading {
+    font-size: 0.8rem;
+    color: var(--navy)
+}
+
+/* Study area description list */
+/* set default margin and left-right padding to 0 */
+.st-key-project-overview dl.study-facts-list {
+    margin: 0;          
+    padding-inline: 0 !important;
+    border-top: 1px solid var(--section-rule)
+}
+
+/* Style study area description list sections */
+.st-key-project-overview dl.study-facts-list > .study-facts {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) auto;
+    gap: 1.25rem;
+    align-items: start;
+    padding: 1.0625rem 0;
+    width: 100%;
+    margin: 0;
+    border-bottom: 1px solid var(--section-rule);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+}
+
+/* style study area description list title (dt) and description (dd) */
+.study-facts dt {
+    color: var(--muted-text);
+    font-weight: 400;
+}
+
+.study-facts dd {
+    color: var(--ink);
+    text-align: right;
+    font-weight: 500
+}
+
+/* layout for different screens */
+@media (max-width: 47.5rem) {
+    .project-layout {
+        grid-template-columns: 1fr;
+        gap: 2.625rem;
+    }
+
+    .project-copy h2,
+    .project-copy > p:not(.section-label) {
+        max-width: none;
+    }
+}
+
+@media (max-width: 30rem) {
+    .study-facts {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    .study-facts dd {
+        text-align: left;
+    }
+}
+
+/* Add anchor offset */
+.section-shell,
+.section-anchor {
+    scroll-margin-top: var(--section-scroll-offset);
+}
 /* /* Web app global screen display setting
 :root {
     --page-gutter: clamp(1rem, 3vw, 3rem);
