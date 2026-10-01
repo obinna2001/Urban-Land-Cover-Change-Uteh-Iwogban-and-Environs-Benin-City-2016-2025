@@ -176,7 +176,8 @@ header[data-testid="stHeader"] a[data-testid="stTopNavLink"][aria-current="page"
     line-height: 1.65;
 }
 
-/* ------------------------------- HOME PAGE CONTENT ----------------------------------- */
+/* ----------------------------------------- HOME PAGE CONTENT ------------------------------------------ */
+/* ----------------------------------------- Common configuration/style----------------------------------- */
 /* Make main-content key container extend to the full screen */
 .st-key-main-content {
     width: 100%;
@@ -237,7 +238,7 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
     text-transform: uppercase;
 }
 
-/* ----------- Project Overview container------------ */
+/* ------------------------------------- Project Overview container --------------------------------- */
 /* page arrangement */
 .project-layout {
     display: grid;
@@ -276,7 +277,7 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
 
 /* Study area tile heading */
 #study-area-heading {
-    font-size: 0.8rem;
+    font-size: 0.88rem;
     color: var(--navy)
 }
 
@@ -299,7 +300,7 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
     margin: 0;
     border-bottom: 1px solid var(--section-rule);
     font-family: var(--font-sans);
-    font-size: 0.875rem;
+    font-size: 0.867rem;
 }
 
 /* style study area description list title (dt) and description (dd) */
@@ -343,6 +344,94 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
 .section-anchor {
     scroll-margin-top: var(--section-scroll-offset);
 }
+
+/* ------------------------------------ Methodology (Method at a glance) container/section -------------------------- */
+/* --- Heading, Title and Introduction row ----------- */
+.method-head {
+    display: flex;
+    gap: clamp(2rem, 5vw, 4rem);
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.75rem;
+    font-family: var(--font-sans)
+}
+
+.method-introduction {
+    flex: 0 1 38.75rem;
+    max-width: 38.75rem;
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 1.02rem;
+    line-height: 1.6;
+}
+
+.method-title-group h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(1.875rem, 2.4vw, 2rem);
+    font-weight: 440;
+    line-height: 1.2;
+    letter-spacing: -0.025rem
+}
+
+/* Three methodology steps */
+.method-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 2rem);
+    font-family: var(--font-sans);
+}
+
+.method-step {
+    padding-top: 1.125rem;
+    border-top: 2px solid var(--section-rule)
+}
+
+.step-number {
+    margin: 0;
+    color: var(--nav-active-colour);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em
+
+}
+
+.step-title {
+    margin: 0.625rem 0 0.4375rem;
+    color: var(--ink);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.step-description {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.55;
+
+}
+
+/* add responsive layer for different screen sizes */
+@media (max-width: 47.5rem) {
+    .method-head {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .method-introduction {
+        max-width: none;
+        justify-self: start;
+    }
+
+    .method-list {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+
 /* /* Web app global screen display setting
 :root {
     --page-gutter: clamp(1rem, 3vw, 3rem);

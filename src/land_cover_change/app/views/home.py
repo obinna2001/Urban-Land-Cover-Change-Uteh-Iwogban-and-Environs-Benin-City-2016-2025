@@ -93,14 +93,18 @@ with st.container(key="main-content"):
                 aria-labelledby="method-heading"
             >
                 <article class="methodology-content">
-                    <p class="section-label">Method at a glance</p>
+                    <div class="method-head">
+                        <div class="method-title-group">
+                            <p class="section-label">Method at a glance</p>
 
-                    <h2 id="method-heading">From satellite observation to evidence</h2>
+                            <h2 id="method-heading">From satellite observation to evidence</h2>
+                        </div>
 
-                    <p class="method-introduction">
-                        Dynamic World labels were clipped to the study boundary, measured by class,
-                        and compared across the three study years.
-                    </p>
+                        <p class="method-introduction">
+                            Dynamic World labels were clipped to the study boundary, measured by class,
+                            and compared across the three study years.
+                        </p>
+                    </div>
 
                     <div class="method-list">
                         <div class="method-step">
