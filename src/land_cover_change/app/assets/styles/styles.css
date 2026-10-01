@@ -228,7 +228,7 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
 /* ----- style nested containers in main-content----- */
 /*  Style the section label of all nested containers*/
 .st-key-main-content .section-label {
-    margin: 0 0 0.9375rem;
+    margin: 0 0 0.6375rem;
     color: var(--muted-text);
     font-family: var(--font-sans);
     font-size: 0.98rem;
@@ -349,7 +349,7 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
 /* --- Heading, Title and Introduction row ----------- */
 .method-head {
     display: flex;
-    gap: clamp(2rem, 5vw, 4rem);
+    gap: 1.875rem;
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 1.75rem;
@@ -363,6 +363,10 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
     color: var(--muted-text);
     font-size: 1.02rem;
     line-height: 1.6;
+}
+
+.method-title-group {
+    min-width: 0;
 }
 
 .method-title-group h2 {
@@ -416,13 +420,15 @@ div[data-testid="stVerticalBlock"].st-key-main-content {
 /* add responsive layer for different screen sizes */
 @media (max-width: 47.5rem) {
     .method-head {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.75rem;
     }
 
     .method-introduction {
+        flex: none;
+        width: 100%;
         max-width: none;
-        justify-self: start;
     }
 
     .method-list {
