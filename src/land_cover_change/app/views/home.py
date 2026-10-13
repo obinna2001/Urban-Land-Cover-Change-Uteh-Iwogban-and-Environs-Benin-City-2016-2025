@@ -146,7 +146,7 @@ with st.container(key="main-content"):
 
                 <p class="sources-introduction">
                     The analysis combines satellite-derived land-cover labels with administrative boundary
-                    data and a reproducible workflow.
+                    data and a reproducible acquisition.
                 </p>
 
                 <div class="sources-list">
@@ -185,7 +185,7 @@ with st.container(key="main-content"):
                     </article>
 
                     <article>
-                        <h3 class="source-title">Google Earth Engine workflow</h3>
+                        <h3 class="source-title">Earth Engine workflow</h3>
 
                         <p class="source-content">
                             The acquisition and export script used to prepare the Dynamic World GeoTIFF files.
